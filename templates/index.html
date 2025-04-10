@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>YouTube Downloader</title>
+</head>
+<body>
+    <div class="container">
+        <h1>YouTube Downloader</h1>
+
+         <div class="theme-toggle-wrapper">
+            <label class="switch">
+                <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
+                <span class="slider"></span>
+            </label>
+                <span class="toggle-label">Dark Mode</span>
+        </div>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+        <form method="POST" onsubmit="startConversion()">
+            <div class="form-group">
+                <input type="text" name="url" placeholder="Enter YouTube URL" required>
+            </div>
+            <div class="form-group">
+                <select name="format" onchange="updateQualityOptions()">
+                    <option value="mp3">MP3 Audio</option>
+                    <option value="mp4">MP4 Video</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="quality" id="qualitySelect">
+                    <option value="192">192 kbps (Good Quality)</option>
+                    <option value="320">320 kbps (Best Quality)</option>
+                </select>
+            </div>
+            <button type="submit" id="convertBtn">
+                <i class="fa-solid fa-download"></i> Download
+            </button>
+        </form>
+
+        <div class="progress-container" id="progressContainer">
+            <h3>Conversion Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-info">
+                <span id="progressPercent">0%</span>
+                <span id="progressSpeed">Speed: 0 KiB/s</span>
+                <span id="progressETA">ETA: 0s</span>
+            </div>
+        </div>
+
+        {% if download_url %}
+        <div class="download-link">
+            <a href="{{ download_url }}" id="downloadLink">Download Your File</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+    <script src="../static/js/script.js"></script>
+</html>
